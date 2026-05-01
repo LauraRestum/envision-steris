@@ -151,12 +151,12 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 .research-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(0,40,85,0.25) 100%); pointer-events: none; }
 
 /* ========= SLIDE 4: WHO WE ARE ========= */
-.who-grid { display: grid; grid-template-columns: 1fr 0.8fr 0.95fr; gap: 24px; align-items: start; }
+.who-grid { display: grid; grid-template-columns: 0.9fr 0.72fr 0.95fr; gap: 18px; align-items: start; }
 .who-statement { position: relative; display: flex; flex-direction: column; }
 .who-quote-mark { display: none; }
-.who-quote { font-size: clamp(17px, 1.55vw, 22px); font-weight: 700; line-height: 1.25; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 22px; }
+.who-quote { font-size: clamp(15px, 1.3vw, 19px); font-weight: 700; line-height: 1.22; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 12px; }
 .who-quote .accent { color: var(--blue); }
-.who-stats { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent; margin-top: 8px; min-height: 0; align-content: start; max-width: 100%; }
+.who-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; padding: 0; border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent; margin-top: 6px; min-height: 0; align-content: start; max-width: 100%; }
 .stat-block { display: flex; flex-direction: column; gap: 3px; }
 .stat-num { font-size: clamp(24px, 2.1vw, 34px); font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
 .stat-num.text { font-size: clamp(20px, 1.7vw, 28px); letter-spacing: 0; }
