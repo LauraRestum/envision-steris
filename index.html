@@ -80,7 +80,7 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 
 /* ========= SLIDE 1: COVER ========= */
 .cover { background: var(--white); position: relative; overflow: hidden; }
-.cover-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 5vw; align-items: center; flex: 1; z-index: 2; position: relative; min-height: 0; }
+.cover-grid { display: grid; grid-template-columns: 2fr 1fr; gap: clamp(20px, 2.4vw, 48px); align-items: center; flex: 1; z-index: 2; position: relative; min-height: 0; }
 .cover-mark { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; }
 .brand-lockup { display: flex; align-items: center; gap: 20px; }
 .brand-name { font-weight: 800; font-size: 18px; color: var(--navy); letter-spacing: -0.01em; }
@@ -90,7 +90,7 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 .meta-item { display: flex; flex-direction: column; gap: 4px; }
 .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); }
 .meta-value { font-weight: 600; font-size: 14.5px; color: var(--navy); letter-spacing: -0.01em; }
-.cover-visual { position: relative; height: 100%; max-height: 60vh; display: flex; align-items: center; justify-content: center; }
+.cover-visual { position: relative; height: 100%; max-height: 70vh; display: flex; align-items: stretch; justify-content: stretch; }
 .cover-orb { position: relative; width: 100%; max-width: 460px; aspect-ratio: 1; }
 .orb-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(0,40,85,0.1); animation: orbSpin 80s linear infinite; }
 .orb-ring:nth-child(2) { inset: 8%; border-color: rgba(0,40,85,0.08); animation-duration: 60s; animation-direction: reverse; }
@@ -106,16 +106,14 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 .orb-node:nth-child(6) { bottom: 8%; left: 50%; transform: translateX(-50%); background: var(--blue); box-shadow: 0 0 0 4px rgba(0, 48, 135, 0.15), 0 4px 12px rgba(0, 48, 135, 0.3); animation-delay: 2s; }
 .cover-bg-pattern { position: absolute; top: 0; right: 0; width: 60%; height: 100%; background-image: radial-gradient(circle at 1px 1px, rgba(0,40,85,0.08) 1px, transparent 0); background-size: 32px 32px; mask-image: linear-gradient(to left, black 30%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%); pointer-events: none; z-index: 1; }
 
-/* Cover photograph (replaces orb on slide 1) */
-.cover-photo { position: relative; width: 100%; max-width: 560px; aspect-ratio: 4/3; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-xl); }
+/* Cover photograph — fills the right ~1/3 of the slide. Left edge is masked
+   into transparency so the photo dissolves naturally into the headline column;
+   a mild bright-blue / navy gradient tints the visible portion to sit in palette. */
+.cover-photo { position: relative; width: 100%; height: 100%; min-height: clamp(360px, 60vh, 640px); border-radius: 0; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 24%, black 100%); mask-image: linear-gradient(to right, transparent 0%, black 24%, black 100%); }
 .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 12s var(--easing); }
-.slide.active .cover-photo img { transform: scale(1.05); }
-/* Two-pass overlay: a soft navy wash anchors the photo to the deck palette,
-   and a bottom-up fade gives the caption a clean reading bed. */
-.cover-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,40,85,0.12) 0%, transparent 35%, transparent 65%, rgba(0,40,85,0.22) 100%); pointer-events: none; z-index: 1; }
-.cover-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,40,85,0.55) 0%, rgba(0,40,85,0.15) 28%, transparent 50%); pointer-events: none; z-index: 1; }
-.cover-photo-tag { position: absolute; bottom: 16px; left: 18px; padding: 6px 14px; background: rgba(255,255,255,0.94); backdrop-filter: blur(10px); border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: var(--navy); text-transform: uppercase; z-index: 2; display: inline-flex; align-items: center; gap: 8px; }
-.cover-photo-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.slide.active .cover-photo img { transform: scale(1.04); }
+.cover-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(255,255,255,0.6) 0%, transparent 32%, rgba(65,182,230,0.06) 65%, rgba(0,48,135,0.14) 100%); pointer-events: none; z-index: 1; }
+.cover-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,40,85,0.20) 0%, transparent 45%); pointer-events: none; z-index: 1; }
 
 /* ========= SLIDE 2: ABILITY ONE (compact rebuild) ========= */
 .a1-slide { background: var(--white); }
@@ -167,10 +165,12 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 .research-summary p:last-child { margin-bottom: 0; }
 .research-summary .pull { font-size: 13.5px; font-weight: 700; line-height: 1.3; color: var(--navy); letter-spacing: -0.01em; padding: 12px 14px; background: var(--off-white); border-radius: 10px; margin: 10px 0; border-left: 3px solid var(--bright-blue); position: relative; }
 .research-summary .pull em { font-style: normal; color: var(--blue); }
+/* Slide 3 surgical scene — ambient backdrop (matching slides 8 and 9). */
 .research-hero-img { width: calc(100% + 36px); margin: -18px -18px 10px; aspect-ratio: 16/5.2; overflow: hidden; position: relative; border-radius: 16px 16px 0 0; flex-shrink: 0; }
-.research-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 8s var(--easing); }
-.slide.active .research-hero-img img { transform: scale(1.05); }
-.research-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(0,40,85,0.25) 100%); pointer-events: none; }
+.research-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; filter: saturate(0.55) brightness(0.96); transition: transform 8s var(--easing); }
+.slide.active .research-hero-img img { transform: scale(1.04); }
+.research-hero-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,40,85,0.28) 0%, rgba(0,40,85,0.08) 50%, rgba(0,40,85,0.22) 100%); pointer-events: none; z-index: 1; }
+.research-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,40,85,0.30) 0%, transparent 60%); pointer-events: none; z-index: 1; }
 
 /* ========= SLIDE 4: WHO WE ARE ========= */
 .who-grid { display: grid; grid-template-columns: 1fr 0.8fr 0.95fr; gap: 24px; align-items: start; }
@@ -510,9 +510,8 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
           </div>
         </div>
         <div class="cover-visual">
-          <div class="cover-photo">
-            <img src="images/envision-hq.jpg" alt="Envision Industries headquarters exterior" loading="eager" decoding="async">
-            <span class="cover-photo-tag">Envision Industries</span>
+          <div class="cover-photo" aria-hidden="true">
+            <img src="images/envision-hq.jpg" alt="" loading="eager" decoding="async">
           </div>
         </div>
       </div>
