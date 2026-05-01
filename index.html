@@ -198,9 +198,10 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 
 /* Who-we-are portrait column — clean cropped photo card */
 .who-portrait { position: relative; min-height: clamp(420px, 58vh, 700px); height: 100%; max-height: min(70vh, calc(100vh - 190px)); border-radius: 20px; overflow: visible; background: transparent; box-shadow: none; }
-.who-portrait img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; object-position: center bottom; z-index: 2; filter: drop-shadow(0 24px 26px rgba(0,40,85,0.30)); }
-.who-portrait::after { content: ''; position: absolute; inset: auto 12% 2% 12%; height: 30px; background: radial-gradient(ellipse, rgba(0,0,0,0.34), transparent 70%); z-index: 1; pointer-events: none; filter: blur(6px); }
-.who-portrait .workforce-badge { top: auto; bottom: 14px; right: auto; left: 50%; transform: translateX(-50%); z-index: 3; }
+.who-portrait img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; object-position: 42% bottom; z-index: 2; filter: drop-shadow(0 22px 32px rgba(0,40,85,0.55)) drop-shadow(0 8px 14px rgba(0,40,85,0.38)) drop-shadow(0 0 28px rgba(0,40,85,0.22)); }
+.who-portrait::before { content: ''; position: absolute; bottom: 8%; left: 42%; transform: translateX(-50%); width: 78%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(0,40,85,0.42) 0%, rgba(0,48,135,0.22) 40%, transparent 72%); filter: blur(2px); z-index: 1; pointer-events: none; }
+.who-portrait::after { content: ''; position: absolute; inset: auto 22% 1% 22%; height: 22px; background: radial-gradient(ellipse, rgba(0,40,85,0.45), transparent 70%); z-index: 1; pointer-events: none; filter: blur(8px); transform: translateX(-8%); }
+.who-portrait .workforce-badge { top: auto; bottom: 14px; right: auto; left: 42%; transform: translateX(-50%); z-index: 3; }
 
 /* ========= SLIDE 5: WHAT MAKES US A FIT ========= */
 .capability-slide { background: var(--off-white); }
