@@ -156,9 +156,9 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
 .who-quote-mark { display: none; }
 .who-quote { font-size: clamp(17px, 1.55vw, 22px); font-weight: 700; line-height: 1.25; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 22px; }
 .who-quote .accent { color: var(--blue); }
-.who-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 14px; border: none; border-radius: 12px; margin-top: 10px; min-height: 0; align-content: start; }
-.stat-block { display: flex; flex-direction: column; gap: 6px; }
-.stat-num { font-size: clamp(34px, 3.2vw, 50px); font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.03em; }
+.who-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 14px; border: none; border-radius: 12px; margin-top: 10px; min-height: 0; align-content: start; }
+.stat-block { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.stat-num { font-size: clamp(34px, 3.2vw, 50px); font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.03em; white-space: nowrap; }
 .stat-num.text { font-size: clamp(30px, 2.7vw, 42px); letter-spacing: -0.01em; }
 .stat-label { font-size: clamp(20px, 1.9vw, 28px); color: var(--charcoal); line-height: 1.2; font-weight: 500; }
 .who-pillars { display: flex; flex-direction: column; gap: 10px; }
@@ -366,12 +366,19 @@ p, li { font-size: clamp(15px, 1.1vw, 18px); line-height: 1.6; color: var(--char
   .a1-hero { grid-template-columns: 1fr; }
   .a1-hero-portrait { display: none; }
   .who-portrait { display: none; }
+  .who-stats { grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px 0; }
+  .stat-num { font-size: clamp(30px, 6vw, 42px); }
+  .stat-label { font-size: clamp(16px, 3.5vw, 22px); }
   .cap-pillars-grid { grid-template-columns: repeat(2, 1fr); }
   .path-grid { grid-template-columns: 1fr; }
   .cap-grid { grid-template-columns: 1fr; }
   .parts-cards { grid-template-columns: 1fr 1fr; }
   .a1-hero-stat { grid-template-columns: 1fr 1fr; }
   .keyboard-hint { display: none; }
+}
+
+@media (max-width: 760px) {
+  .who-stats { grid-template-columns: 1fr; }
 }
 </style>
 </head>
