@@ -127,8 +127,7 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .slide.active .cover-photo img { transform: scale(1.04); }
 /* Mild bright-blue → navy tint sits over the visible portion. */
 .cover-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 40%, rgba(65,182,230,0.08) 72%, rgba(0,48,135,0.16) 100%); pointer-events: none; z-index: 1; }
-.cover-photo-tag { position: absolute; bottom: 32px; right: 32px; padding: 7px 14px; background: #ffffff; border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: var(--navy); text-transform: uppercase; z-index: 3; display: inline-flex; align-items: center; gap: 8px; pointer-events: auto; box-shadow: 0 4px 12px rgba(0,40,85,0.18); }
-.cover-photo-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.cover-photo-tag { position: absolute; bottom: 32px; right: 32px; padding: 7px 14px; background: var(--navy); border-radius: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: #ffffff; text-transform: uppercase; z-index: 3; display: inline-flex; align-items: center; pointer-events: auto; box-shadow: 0 4px 12px rgba(0,40,85,0.18); }
 
 /* ========= SLIDE 2: ABILITY ONE (compact rebuild) ========= */
 .a1-slide { background: var(--white); }
@@ -243,8 +242,7 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .slide.active .cap-hero img { transform: scale(1.04); }
 .cap-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,40,85,0.18) 0%, rgba(0,40,85,0.05) 55%, rgba(0,40,85,0.18) 100%); pointer-events: none; z-index: 1; }
 .cap-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,40,85,0.22) 0%, transparent 45%); pointer-events: none; z-index: 1; }
-.cap-hero-tag { position: absolute; bottom: 14px; left: 16px; padding: 7px 14px; background: #ffffff; border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: var(--navy); text-transform: uppercase; z-index: 3; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(0,40,85,0.18); }
-.cap-hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.cap-hero-tag { position: absolute; bottom: 14px; left: 16px; padding: 7px 14px; background: var(--navy); border-radius: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: #ffffff; text-transform: uppercase; z-index: 3; display: inline-flex; align-items: center; box-shadow: 0 4px 12px rgba(0,40,85,0.18); }
 
 /* ========= SLIDE 7: PATHWAYS ========= */
 .path-slide { background: var(--off-white); }
@@ -380,8 +378,7 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .slide.active .close-cta-photo img { transform: scale(1.04); }
 /* Diagonal navy + bright-blue tint draws the photo into the deck palette. */
 .close-cta-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,40,85,0.30) 0%, rgba(65,182,230,0.10) 55%, rgba(0,48,135,0.28) 100%); pointer-events: none; z-index: 1; }
-.close-cta-photo-tag { position: absolute; bottom: 18px; right: 22px; padding: 6px 12px; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: var(--navy); text-transform: uppercase; z-index: 2; display: inline-flex; align-items: center; gap: 8px; }
-.close-cta-photo-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.close-cta-photo-tag { position: absolute; bottom: 18px; right: 22px; padding: 6px 12px; background: var(--navy); border-radius: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: #ffffff; text-transform: uppercase; z-index: 2; display: inline-flex; align-items: center; }
 
 /* ========= NEW SLIDE 6: PRODUCTION-GRADE FIT (stats + pillars) ========= */
 .fit-slide { background: var(--off-white); }
