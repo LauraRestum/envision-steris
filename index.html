@@ -404,6 +404,8 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .run-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 22px; flex: 1; min-height: 0; align-items: stretch; }
 .run-left { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
 .run-left .cap-hero { aspect-ratio: 16/10; margin-bottom: 0; flex: 0 0 auto; }
+.run-slide.active .cap-hero img { animation: walkwayZoom 24s ease-in-out infinite; transition: none; transform-origin: 50% 55%; }
+@keyframes walkwayZoom { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
 .run-lead { font-size: 15px; line-height: 1.5; color: var(--charcoal); }
 .run-credentials { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 18px; background: var(--off-white); border-radius: 4px; border: 1px solid rgba(0,40,85,0.08); }
 .run-credentials .cred-row { font-size: 12.5px; }
