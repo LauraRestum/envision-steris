@@ -47,6 +47,7 @@ html, body { font-family: 'Montserrat', sans-serif; background: var(--off-white)
 .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
 .slide { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.6s var(--easing), transform 0.6s var(--easing); overflow: hidden; }
 .slide.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.deck.swapping .slide, .deck.swapping .slide * { transition: none !important; animation: none !important; }
 .slide-inner { height: 100vh; width: min(100%, var(--content-max)); margin: 0 auto; display: flex; flex-direction: column; padding: var(--safe-top) clamp(28px, 4.5vw, 70px) var(--safe-bottom); position: relative; overflow: hidden; }
 
 /* === FIXED LOGO HEADER (all slides) === */
@@ -134,20 +135,20 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .a1-layout { display: grid; grid-template-columns: 1.08fr 1fr; gap: 24px; flex: 1; align-items: stretch; min-height: 0; --a1-card-stack-offset: 0px; }
 .a1-hero { background: var(--grad-navy-blue); border-radius: 8px; padding: 32px; color: white; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
 .a1-hero::before { content: ''; position: absolute; top: -30%; right: -30%; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(74,122,20,0.16), transparent 70%); pointer-events: none; }
-.a1-hero-mark { display: flex; align-items: center; gap: 10px; padding: 6px 12px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: white; align-self: flex-start; position: relative; margin-bottom: 20px; }
+.a1-hero-mark { display: flex; align-items: center; gap: 10px; padding: 6px 12px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: white; align-self: flex-start; position: relative; margin-bottom: 14px; }
 .a1-hero-mark::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-.a1-hero h2 { color: white; font-size: clamp(18px, 1.7vw, 24px); line-height: 1.15; margin-bottom: 12px; position: relative; }
+.a1-hero h2 { color: white; font-size: clamp(17px, 1.55vw, 22px); line-height: 1.15; margin-bottom: 10px; position: relative; }
 .a1-hero h2 .accent-light { color: var(--bright-blue); }
-.a1-hero p { color: rgba(255,255,255,0.96); font-size: 16px; line-height: 1.5; margin-bottom: 10px; position: relative; max-width: 460px; }
-.a1-hero-stat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.22); position: relative; }
-.a1-hero-stat-num { font-size: clamp(22px, 1.9vw, 28px); font-weight: 800; color: white; line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px; }
-.a1-hero-stat-label { font-size: 16px; line-height: 1.35; color: #FFFFFF; font-weight: 500; }
-.a1-content { display: flex; flex-direction: column; gap: 10px; min-height: 0; }
-.a1-card { padding: 12px 18px; background: var(--off-white); border-radius: 4px; border: 1px solid rgba(0,40,85,0.06); border-left: 4px solid var(--green); transition: all 0.4s var(--easing); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.a1-hero p { color: rgba(255,255,255,0.96); font-size: 14px; line-height: 1.45; margin-bottom: 8px; position: relative; max-width: 460px; }
+.a1-hero-stat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.22); position: relative; }
+.a1-hero-stat-num { font-size: clamp(20px, 1.7vw, 26px); font-weight: 800; color: white; line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px; }
+.a1-hero-stat-label { font-size: 13px; line-height: 1.3; color: #FFFFFF; font-weight: 500; }
+.a1-content { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.a1-card { padding: 10px 16px; background: var(--off-white); border-radius: 4px; border: 1px solid rgba(0,40,85,0.06); border-left: 4px solid var(--green); transition: all 0.4s var(--easing); flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .a1-card:hover { background: white; box-shadow: var(--shadow-md); transform: translateX(6px); }
-.a1-card-num { font-size: 12px; color: var(--blue); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; display: block; }
-.a1-card h4 { margin-bottom: 4px; color: var(--navy); font-size: 17px; line-height: 1.25; }
-.a1-card p { font-size: 16px; color: var(--charcoal); line-height: 1.45; }
+.a1-card-num { font-size: 11.5px; color: var(--blue); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; display: block; }
+.a1-card h4 { margin-bottom: 3px; color: var(--navy); font-size: 16px; line-height: 1.2; }
+.a1-card p { font-size: 13.5px; color: var(--charcoal); line-height: 1.4; }
 
 /* Portrait integration on Slide 2 (AbilityOne hero panel) */
 .a1-hero { display: grid; grid-template-columns: var(--a1-cols, 1fr 0.78fr); gap: 16px; align-items: stretch; padding: 22px; min-height: 0; height: 100%; max-height: none; position: relative; overflow: hidden; }
@@ -299,8 +300,8 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 /* ========= SLIDE 9: ORLOCATE (rebuilt with custom SVG illustration) ========= */
 .orlocate-slide { background: var(--off-white); }
 .orlocate-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; align-items: stretch; min-height: 0; }
-.orlocate-product { background: white; border-radius: 6px; padding: 24px 26px; border: 1px solid rgba(0,40,85,0.06); display: flex; flex-direction: column; }
-.orlocate-product-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(0,40,85,0.08); }
+.orlocate-product { background: white; border-radius: 6px; padding: 18px 22px; border: 1px solid rgba(0,40,85,0.06); display: flex; flex-direction: column; }
+.orlocate-product-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,40,85,0.08); }
 .orlocate-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: var(--blue); text-transform: uppercase; }
 .orlocate-status { display: flex; align-items: center; gap: 8px; padding: 5px 12px; background: rgba(0,40,85,0.92); border-radius: 4px; font-size: 12px; font-weight: 700; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.06em; }
 .orlocate-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bright-blue); animation: pulseDot 2s ease-in-out infinite; }
@@ -317,33 +318,33 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 .orlocate-illustration .signal-wave-3 { animation-delay: 0.8s; }
 
 /* Slide 9 ORLocate ambient photo — same backdrop feel as the parts hero. */
-.orlocate-photo { border-radius: 6px; margin-bottom: 14px; aspect-ratio: 16/8; overflow: hidden; position: relative; }
+.orlocate-photo { border-radius: 6px; margin-bottom: 12px; aspect-ratio: 16/6; overflow: hidden; position: relative; }
 .orlocate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; filter: saturate(0.55) brightness(0.96); transition: transform 8s var(--easing); }
 .slide.active .orlocate-photo img { transform: scale(1.04); }
 .orlocate-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,40,85,0.28) 0%, rgba(0,40,85,0.08) 50%, rgba(0,40,85,0.22) 100%); pointer-events: none; z-index: 1; }
 .orlocate-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,40,85,0.30) 0%, transparent 60%); pointer-events: none; z-index: 1; }
 
-.orlocate-product h3 { margin-bottom: 8px; color: var(--navy); font-size: 18px; }
-.orlocate-product .desc { font-size: 15px; color: var(--charcoal); line-height: 1.55; margin-bottom: 12px; }
-.orlocate-features { list-style: none; display: flex; flex-direction: column; gap: 7px; padding-top: 12px; border-top: 1px solid rgba(0,40,85,0.08); }
-.orlocate-features li { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--charcoal); line-height: 1.5; }
+.orlocate-product h3 { margin-bottom: 6px; color: var(--navy); font-size: 17px; }
+.orlocate-product .desc { font-size: 14px; color: var(--charcoal); line-height: 1.5; margin-bottom: 10px; }
+.orlocate-features { list-style: none; display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid rgba(0,40,85,0.08); }
+.orlocate-features li { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; color: var(--charcoal); line-height: 1.45; }
 .orlocate-features li svg { color: var(--green); flex-shrink: 0; margin-top: 2px; }
 
-.orlocate-skus { background: white; border-radius: 6px; padding: 22px 26px; border: 1px solid rgba(0,40,85,0.06); display: flex; flex-direction: column; }
-.orlocate-skus-header { margin-bottom: 14px; }
-.orlocate-skus-header h3 { margin-bottom: 4px; color: var(--navy); font-size: 18px; }
-.orlocate-skus-header p { font-size: 15px; color: var(--charcoal); line-height: 1.5; }
+.orlocate-skus { background: white; border-radius: 6px; padding: 18px 22px; border: 1px solid rgba(0,40,85,0.06); display: flex; flex-direction: column; }
+.orlocate-skus-header { margin-bottom: 10px; }
+.orlocate-skus-header h3 { margin-bottom: 4px; color: var(--navy); font-size: 17px; }
+.orlocate-skus-header p { font-size: 14px; color: var(--charcoal); line-height: 1.45; }
 .sku-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.sku-table thead th { text-align: left; padding: 8px 10px; background: var(--off-white); color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid rgba(0,40,85,0.12); }
+.sku-table thead th { text-align: left; padding: 6px 10px; background: var(--off-white); color: var(--blue); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid rgba(0,40,85,0.12); }
 .sku-table thead th:first-child { border-top-left-radius: 8px; }
 .sku-table thead th:last-child { border-top-right-radius: 8px; }
-.sku-table tbody td { padding: 8px 10px; border-bottom: 1px solid rgba(0,40,85,0.08); color: var(--charcoal); vertical-align: middle; transition: background 0.2s ease; }
+.sku-table tbody td { padding: 6px 10px; border-bottom: 1px solid rgba(0,40,85,0.08); color: var(--charcoal); vertical-align: middle; transition: background 0.2s ease; }
 .sku-table tbody tr:last-child td { border-bottom: none; }
 .sku-table tbody tr:hover td { background: rgba(0,48,135,0.06); }
 .sku-code { font-weight: 700; color: var(--navy); font-size: 13px; letter-spacing: 0.02em; }
 .sku-spec { color: var(--charcoal); font-size: 13px; }
-.sku-callout { margin-top: 12px; padding: 12px 16px; background: linear-gradient(135deg, rgba(0,48,135,0.04), rgba(120,190,33,0.05)); border-radius: 4px; border-left: 3px solid var(--green); }
-.sku-callout p { font-size: 14px; color: var(--navy); font-weight: 600; line-height: 1.5; margin: 0; }
+.sku-callout { margin-top: 10px; padding: 10px 14px; background: linear-gradient(135deg, rgba(0,48,135,0.04), rgba(120,190,33,0.05)); border-radius: 4px; border-left: 3px solid var(--green); }
+.sku-callout p { font-size: 13.5px; color: var(--navy); font-weight: 600; line-height: 1.45; margin: 0; }
 
 /* ========= SLIDE 10: CLOSE ========= */
 .close-slide { background: var(--white); }
@@ -387,31 +388,31 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 /* ========= NEW SLIDE 6: PRODUCTION-GRADE FIT (stats + pillars) ========= */
 .fit-slide { background: var(--off-white); }
 .fit-lead { max-width: 880px; margin-bottom: 18px; }
-.fit-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; margin-bottom: 22px; }
-.fit-stat { background: white; border-radius: 6px; padding: 24px 24px; border: 1px solid rgba(0,40,85,0.08); display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+.fit-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 4px; margin-bottom: 14px; }
+.fit-stat { background: white; border-radius: 6px; padding: 18px 22px; border: 1px solid rgba(0,40,85,0.08); display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
 .fit-stat::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--grad-blue-green); }
-.fit-stat-num { font-size: clamp(56px, 5vw, 72px); font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.04em; }
-.fit-stat-label { font-size: 17px; color: var(--charcoal); line-height: 1.4; font-weight: 500; max-width: 320px; }
-.fit-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 4px; }
-.fit-pillars .cap-pillar-card { padding: 18px 18px; }
-.fit-pillars .cap-pillar-card h3 { font-size: 17px; line-height: 1.25; }
-.fit-pillars .cap-pillar-card p { font-size: 14px; line-height: 1.45; margin-top: 4px; }
-.fit-caption { margin-top: 16px; font-size: 15px; color: var(--charcoal); font-weight: 600; max-width: 1100px; }
+.fit-stat-num { font-size: clamp(44px, 4vw, 60px); font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.04em; }
+.fit-stat-label { font-size: 15px; color: var(--charcoal); line-height: 1.35; font-weight: 500; max-width: 320px; }
+.fit-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 2px; }
+.fit-pillars .cap-pillar-card { padding: 14px 16px; }
+.fit-pillars .cap-pillar-card h3 { font-size: 16px; line-height: 1.2; }
+.fit-pillars .cap-pillar-card p { font-size: 13.5px; line-height: 1.4; margin-top: 4px; }
+.fit-caption { margin-top: 12px; font-size: 14px; color: var(--charcoal); font-weight: 600; max-width: 1100px; }
 
 /* ========= NEW SLIDE 7: WHAT WE'D RUN (hero + tiles + credentials) ========= */
 .run-slide { background: var(--white); }
-.run-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 24px; flex: 1; min-height: 0; align-items: stretch; }
-.run-left { display: flex; flex-direction: column; gap: 16px; min-height: 0; }
-.run-left .cap-hero { aspect-ratio: 16/9; margin-bottom: 0; flex: 0 0 auto; }
+.run-layout { display: grid; grid-template-columns: 1.05fr 1fr; gap: 22px; flex: 1; min-height: 0; align-items: stretch; }
+.run-left { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.run-left .cap-hero { aspect-ratio: 16/10; margin-bottom: 0; flex: 0 0 auto; }
 .run-slide.active .cap-hero img { animation: walkwayZoom 24s ease-in-out infinite; transition: none; transform-origin: 50% 55%; }
 @keyframes walkwayZoom { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
-.run-lead { font-size: 16px; line-height: 1.55; color: var(--charcoal); }
-.run-credentials { display: flex; flex-wrap: wrap; gap: 10px 16px; padding: 16px 20px; background: var(--off-white); border-radius: 4px; border: 1px solid rgba(0,40,85,0.08); }
-.run-credentials .cred-row { font-size: 13px; }
-.run-tiles { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 14px; min-height: 0; }
-.run-tiles .cap-tile { padding: 18px 18px; }
-.run-tiles .cap-tile h4 { font-size: 17px; }
-.run-tiles .cap-tile p { font-size: 15px; line-height: 1.45; }
+.run-lead { font-size: 15px; line-height: 1.5; color: var(--charcoal); }
+.run-credentials { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 18px; background: var(--off-white); border-radius: 4px; border: 1px solid rgba(0,40,85,0.08); }
+.run-credentials .cred-row { font-size: 12.5px; }
+.run-tiles { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 12px; min-height: 0; }
+.run-tiles .cap-tile { padding: 14px 16px; }
+.run-tiles .cap-tile h4 { font-size: 16px; }
+.run-tiles .cap-tile p { font-size: 14px; line-height: 1.4; }
 
 @media (max-width: 1024px) {
   .fit-stats { grid-template-columns: 1fr; }
@@ -932,8 +933,9 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-const total = slides.length;
+const deckEl = document.getElementById('deck');
+let slides = deckEl.querySelectorAll('.slide');
+let total = slides.length;
 let current = 0;
 const counter = document.getElementById('counter');
 const prevBtn = document.getElementById('prevBtn');
@@ -941,27 +943,32 @@ const nextBtn = document.getElementById('nextBtn');
 const dotsContainer = document.getElementById('dots');
 const progressBar = document.getElementById('progressBar');
 
-for (let i = 0; i < total; i++) {
-  const dot = document.createElement('button');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-  dot.addEventListener('click', () => goTo(i));
-  dotsContainer.appendChild(dot);
+function buildDots() {
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === current ? ' active' : '');
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  }
 }
+buildDots();
 
 function pad(n) { return n.toString().padStart(2, '0'); }
 
 // Populate slide markers from data-slide attribute so numbering stays in sync
 // with the bottom counter (both use 0N / 0M where M is total slide count).
-(function populateSlideMarkers() {
-  document.querySelectorAll('.slide-marker').forEach(marker => {
+function populateSlideMarkers() {
+  deckEl.querySelectorAll('.slide-marker').forEach(marker => {
     const slide = marker.closest('.slide');
     if (!slide) return;
     const num = parseInt(slide.dataset.slide, 10);
     if (isNaN(num)) return;
     marker.textContent = `${pad(num)} / ${pad(total)}`;
   });
-})();
+}
+populateSlideMarkers();
 
 // Animated counters
 function animateCounters(slide) {
@@ -1006,8 +1013,87 @@ function update() {
 }
 
 function goTo(i) { if (i < 0 || i >= total) return; current = i; update(); }
-function next() { goTo(current + 1); }
-function prev() { goTo(current - 1); }
+function next() { applyPendingDeck(); goTo(current + 1); }
+function prev() { applyPendingDeck(); goTo(current - 1); }
+
+// === Seamless background refresh ===
+// Quietly poll for a newer index.html. When one exists, parse it, preload its
+// images, and stash the new deck markup. On the next user navigation, we swap
+// the deck DOM in synchronously (transitions disabled for the swap itself) so
+// the upcoming slide change plays as a normal fade — no visible reload.
+let pendingDeckHTML = null;
+let baselineDeckHTML = deckEl.innerHTML;
+let refreshChecking = false;
+
+async function checkForUpdate() {
+  if (refreshChecking) return;
+  refreshChecking = true;
+  try {
+    const url = window.location.pathname + '?_=' + Date.now();
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) return;
+    const text = await res.text();
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    const newDeck = doc.getElementById('deck');
+    if (!newDeck) return;
+    const newHTML = newDeck.innerHTML;
+    if (newHTML === baselineDeckHTML || newHTML === pendingDeckHTML) return;
+    // Preload every image referenced in the new deck so the swap is instant.
+    const urls = [...new Set(
+      [...newDeck.querySelectorAll('img')]
+        .map(img => img.getAttribute('src'))
+        .filter(Boolean)
+    )];
+    await Promise.all(urls.map(u => new Promise(resolve => {
+      const im = new Image();
+      im.onload = im.onerror = () => resolve();
+      im.src = u;
+    })));
+    pendingDeckHTML = newHTML;
+  } catch (_) {
+    // network hiccup; try again on next tick
+  } finally {
+    refreshChecking = false;
+  }
+}
+
+function applyPendingDeck() {
+  if (!pendingDeckHTML) return false;
+  const html = pendingDeckHTML;
+  pendingDeckHTML = null;
+  // Disable transitions on slides during the swap so the currently-visible
+  // slide doesn't fade out and the replacement doesn't fade in — the swap is
+  // invisible, and only the subsequent next/prev navigation animates.
+  deckEl.classList.add('swapping');
+  deckEl.innerHTML = html;
+  baselineDeckHTML = html;
+  slides = deckEl.querySelectorAll('.slide');
+  total = slides.length;
+  if (current >= total) current = total - 1;
+  if (current < 0) current = 0;
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  buildDots();
+  populateSlideMarkers();
+  counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+  progressBar.style.width = `${((current + 1) / total) * 100}%`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+  // Force a synchronous reflow so the no-transition state is committed before
+  // we re-enable transitions for the upcoming navigation.
+  void deckEl.offsetHeight;
+  deckEl.classList.remove('swapping');
+  return true;
+}
+
+// Kick off the first poll shortly after load, then every 60s. Also re-check
+// whenever the tab becomes visible again, and prefetch on hover/focus of Next.
+setTimeout(checkForUpdate, 4000);
+setInterval(checkForUpdate, 60000);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) checkForUpdate();
+});
+['mouseenter', 'focus', 'touchstart'].forEach(ev =>
+  nextBtn.addEventListener(ev, checkForUpdate, { passive: true }));
 
 prevBtn.addEventListener('click', prev);
 nextBtn.addEventListener('click', next);
