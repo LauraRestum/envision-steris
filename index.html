@@ -47,6 +47,7 @@ html, body { font-family: 'Montserrat', sans-serif; background: var(--off-white)
 .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
 .slide { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.6s var(--easing), transform 0.6s var(--easing); overflow: hidden; }
 .slide.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.deck.swapping .slide, .deck.swapping .slide * { transition: none !important; animation: none !important; }
 .slide-inner { height: 100vh; width: min(100%, var(--content-max)); margin: 0 auto; display: flex; flex-direction: column; padding: var(--safe-top) clamp(28px, 4.5vw, 70px) var(--safe-bottom); position: relative; overflow: hidden; }
 
 /* === FIXED LOGO HEADER (all slides) === */
@@ -930,8 +931,9 @@ p, li { font-size: clamp(16px, 1.15vw, 18px); line-height: 1.55; color: var(--ch
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-const total = slides.length;
+const deckEl = document.getElementById('deck');
+let slides = deckEl.querySelectorAll('.slide');
+let total = slides.length;
 let current = 0;
 const counter = document.getElementById('counter');
 const prevBtn = document.getElementById('prevBtn');
@@ -939,27 +941,32 @@ const nextBtn = document.getElementById('nextBtn');
 const dotsContainer = document.getElementById('dots');
 const progressBar = document.getElementById('progressBar');
 
-for (let i = 0; i < total; i++) {
-  const dot = document.createElement('button');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-  dot.addEventListener('click', () => goTo(i));
-  dotsContainer.appendChild(dot);
+function buildDots() {
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === current ? ' active' : '');
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  }
 }
+buildDots();
 
 function pad(n) { return n.toString().padStart(2, '0'); }
 
 // Populate slide markers from data-slide attribute so numbering stays in sync
 // with the bottom counter (both use 0N / 0M where M is total slide count).
-(function populateSlideMarkers() {
-  document.querySelectorAll('.slide-marker').forEach(marker => {
+function populateSlideMarkers() {
+  deckEl.querySelectorAll('.slide-marker').forEach(marker => {
     const slide = marker.closest('.slide');
     if (!slide) return;
     const num = parseInt(slide.dataset.slide, 10);
     if (isNaN(num)) return;
     marker.textContent = `${pad(num)} / ${pad(total)}`;
   });
-})();
+}
+populateSlideMarkers();
 
 // Animated counters
 function animateCounters(slide) {
@@ -1004,8 +1011,87 @@ function update() {
 }
 
 function goTo(i) { if (i < 0 || i >= total) return; current = i; update(); }
-function next() { goTo(current + 1); }
-function prev() { goTo(current - 1); }
+function next() { applyPendingDeck(); goTo(current + 1); }
+function prev() { applyPendingDeck(); goTo(current - 1); }
+
+// === Seamless background refresh ===
+// Quietly poll for a newer index.html. When one exists, parse it, preload its
+// images, and stash the new deck markup. On the next user navigation, we swap
+// the deck DOM in synchronously (transitions disabled for the swap itself) so
+// the upcoming slide change plays as a normal fade — no visible reload.
+let pendingDeckHTML = null;
+let baselineDeckHTML = deckEl.innerHTML;
+let refreshChecking = false;
+
+async function checkForUpdate() {
+  if (refreshChecking) return;
+  refreshChecking = true;
+  try {
+    const url = window.location.pathname + '?_=' + Date.now();
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) return;
+    const text = await res.text();
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    const newDeck = doc.getElementById('deck');
+    if (!newDeck) return;
+    const newHTML = newDeck.innerHTML;
+    if (newHTML === baselineDeckHTML || newHTML === pendingDeckHTML) return;
+    // Preload every image referenced in the new deck so the swap is instant.
+    const urls = [...new Set(
+      [...newDeck.querySelectorAll('img')]
+        .map(img => img.getAttribute('src'))
+        .filter(Boolean)
+    )];
+    await Promise.all(urls.map(u => new Promise(resolve => {
+      const im = new Image();
+      im.onload = im.onerror = () => resolve();
+      im.src = u;
+    })));
+    pendingDeckHTML = newHTML;
+  } catch (_) {
+    // network hiccup; try again on next tick
+  } finally {
+    refreshChecking = false;
+  }
+}
+
+function applyPendingDeck() {
+  if (!pendingDeckHTML) return false;
+  const html = pendingDeckHTML;
+  pendingDeckHTML = null;
+  // Disable transitions on slides during the swap so the currently-visible
+  // slide doesn't fade out and the replacement doesn't fade in — the swap is
+  // invisible, and only the subsequent next/prev navigation animates.
+  deckEl.classList.add('swapping');
+  deckEl.innerHTML = html;
+  baselineDeckHTML = html;
+  slides = deckEl.querySelectorAll('.slide');
+  total = slides.length;
+  if (current >= total) current = total - 1;
+  if (current < 0) current = 0;
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  buildDots();
+  populateSlideMarkers();
+  counter.textContent = `${pad(current + 1)} / ${pad(total)}`;
+  progressBar.style.width = `${((current + 1) / total) * 100}%`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+  // Force a synchronous reflow so the no-transition state is committed before
+  // we re-enable transitions for the upcoming navigation.
+  void deckEl.offsetHeight;
+  deckEl.classList.remove('swapping');
+  return true;
+}
+
+// Kick off the first poll shortly after load, then every 60s. Also re-check
+// whenever the tab becomes visible again, and prefetch on hover/focus of Next.
+setTimeout(checkForUpdate, 4000);
+setInterval(checkForUpdate, 60000);
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) checkForUpdate();
+});
+['mouseenter', 'focus', 'touchstart'].forEach(ev =>
+  nextBtn.addEventListener(ev, checkForUpdate, { passive: true }));
 
 prevBtn.addEventListener('click', prev);
 nextBtn.addEventListener('click', next);
